@@ -4,9 +4,9 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/bot/act-bl-bot/app"
-	"github.com/bot/act-bl-bot/method"
-	"github.com/bot/act-bl-bot/utility"
+	"github.com/bot/bukarehatbot/app"
+	"github.com/bot/bukarehatbot/method"
+	"github.com/bot/bukarehatbot/utility"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
