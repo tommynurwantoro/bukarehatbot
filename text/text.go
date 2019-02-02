@@ -23,7 +23,5 @@ func InvalidCommand() string {
 // Private //
 
 func commands() string {
-	return "/halo Cuma buat nyapa aja\n" +
-		"/retro Buat masuk ke sesi retrospective\n" +
-		"/result_retro dd-mm-yyyy Buat dapet hasil retrospective, jangan lupa kasih tanggalnya ya"
+	return "/halo Cuma buat nyapa aja"
 }
