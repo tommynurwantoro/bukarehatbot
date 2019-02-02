@@ -5,6 +5,8 @@ Telegram bot for BukaRehat apps (my team)
 ## Owner
 
 @tommynurwantoro
+@satriowisnugroho
+@himangSharatun
 
 ## Onboarding and Development Guide
 
