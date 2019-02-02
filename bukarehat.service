@@ -1,0 +1,16 @@
+# Copy this file to /lib/systemd/system/ folder
+[Unit]
+Description=bukarehat
+
+[Service]
+Type=simple
+User=root
+
+Restart=on-failure
+RestartSec=10
+
+WorkingDirectory=$HOME/go/src/github.com/bot/bukarehatbot
+ExecStart=$HOME/go/src/github.com/bot/bukarehatbot/bukarehat
+
+[Install]
+WantedBy=multi-user.target
