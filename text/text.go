@@ -35,6 +35,16 @@ func ChangeGroupName(args string) string {
 	return "Nama group udah diganti menjadi " + args
 }
 
+// ShowGroupName _
+func ShowGroupName(name string) string {
+	return "Nama group adalah " + name
+}
+
+// UnknownGroupName _
+func UnknownGroupName() string {
+	return "Admin belum set nama group"
+}
+
 // Private //
 
 func commands() string {
