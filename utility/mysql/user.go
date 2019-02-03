@@ -10,7 +10,11 @@ import (
 // GetOneUser _
 func GetOneUser(username string) entity.User {
 	user := entity.User{}
-	err := app.MysqlClient.QueryRow("SELECT * FROM users WHERE username = ?", username).Scan(&user.ID, &user.Username, &user.IsAdmin)
+	err := app.
+		MysqlClient.
+		QueryRow("SELECT * FROM users WHERE username = ?", username).
+		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
+
 	if err != nil {
 		log.Println(err)
 	}

@@ -3,13 +3,14 @@ package method
 import (
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
+	"github.com/bot/bukarehatbot/utility/mysql"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 // GroupChat _
 func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) string {
 	if groupState == utility.RedisState["init"] {
-		// args := update.Message.CommandArguments()
+		args := update.Message.CommandArguments()
 		switch update.Message.Command() {
 		case "start":
 			return text.Start()
@@ -17,6 +18,15 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			return text.Help()
 		case "halo":
 			return text.Halo(update.Message.From.UserName)
+		case "change_group_name":
+			if args != "" {
+				if mysql.IsAdmin(update.Message.From.UserName) {
+					mysql.UpdateGroupName(update.Message.Chat.ID, args)
+					return text.ChangeGroupName(args)
+				}
+
+				return text.InvalidCommandForUser("@tommynurwantoro")
+			}
 		default:
 			return text.InvalidCommand()
 		}
