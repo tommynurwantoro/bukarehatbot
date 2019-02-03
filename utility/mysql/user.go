@@ -58,11 +58,19 @@ func GetAdmin(groupID int64) entity.User {
 }
 
 // InsertOneUser _
-func InsertOneUser(username string) {
+func InsertOneUser(groupID int64, username string) {
 	_, err := app.MysqlClient.Exec(
-		"INSERT INTO users(username, is_admin) VALUES(?, ?)",
-		username, false)
+		"INSERT INTO users(group_id, username, is_admin, created_at, updated_at) VALUES(?, ?, ?, ?, ?)",
+		groupID, username, false, "2018-11-01 02:43:48", "2018-11-01 02:43:48")
 	if err != nil {
 		panic(err)
+	}
+}
+
+// FirstOrCreateUser _
+func FirstOrCreateUser(groupID int64, username string) {
+	user := GetOneUser(username)
+	if user == (entity.User{}) {
+		InsertOneUser(groupID, username)
 	}
 }
