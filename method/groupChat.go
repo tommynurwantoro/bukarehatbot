@@ -1,6 +1,7 @@
 package method
 
 import (
+	"github.com/bot/bukarehatbot/helper"
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
 	"github.com/bot/bukarehatbot/utility/mysql"
@@ -25,7 +26,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 					return text.ChangeGroupName(args)
 				}
 
-				return text.InvalidCommandForUser("@tommynurwantoro")
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 		default:
 			return text.InvalidCommand()

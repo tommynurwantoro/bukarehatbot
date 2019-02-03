@@ -22,7 +22,12 @@ func InvalidCommand() string {
 
 // InvalidCommandForUser _
 func InvalidCommandForUser(username string) string {
-	return "Kamu gak boleh pakai perintah ini, ngomong dulu ke " + username + " ya"
+	return "Kamu gak boleh pakai perintah ini, ngomong dulu ke @" + username + " ya"
+}
+
+// AdminNotFound _
+func AdminNotFound() string {
+	return "Hanya admin yang boleh pakai perintah ini"
 }
 
 // ChangeGroupName _

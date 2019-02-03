@@ -42,6 +42,21 @@ func IsAdmin(username string) bool {
 	return user.IsAdmin
 }
 
+// GetAdmin _
+func GetAdmin(groupID int64) entity.User {
+	user := entity.User{}
+	err := app.
+		MysqlClient.
+		QueryRow("SELECT * FROM users WHERE group_id = ? AND is_admin = ?", groupID, true).
+		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return user
+}
+
 // InsertOneUser _
 func InsertOneUser(username string) {
 	_, err := app.MysqlClient.Exec(
