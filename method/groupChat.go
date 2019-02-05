@@ -28,7 +28,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 						mysql.FirstOrCreateUser(update.Message.Chat.ID, username)
 					}
 
-					return "berhasil"
+					return text.SuccessAddMember(usernames)
 				}
 
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
