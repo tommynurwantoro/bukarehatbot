@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"log"
+	"time"
 
 	"github.com/bot/bukarehatbot/app"
 	"github.com/bot/bukarehatbot/entity"
@@ -59,9 +60,10 @@ func GetAdmin(groupID int64) entity.User {
 
 // InsertOneUser _
 func InsertOneUser(groupID int64, username string) {
+	now := time.Now()
 	_, err := app.MysqlClient.Exec(
 		"INSERT INTO users(group_id, username, is_admin, created_at, updated_at) VALUES(?, ?, ?, ?, ?)",
-		groupID, username, false, "2018-11-01 02:43:48", "2018-11-01 02:43:48")
+		groupID, username, false, now, now)
 	if err != nil {
 		panic(err)
 	}
