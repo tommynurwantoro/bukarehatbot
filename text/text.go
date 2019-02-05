@@ -20,6 +20,11 @@ func InvalidCommand() string {
 	return "Aku gak ngerti perintah itu, coba perintah yang lain ya."
 }
 
+// SuccessInsertMicrobreak _
+func SuccessInsertMicrobreak(restTime string) string {
+	return "Berhasil menambahkan microbreak pada " + restTime
+}
+
 // Private //
 
 func commands() string {
