@@ -7,10 +7,14 @@ import (
 	"github.com/bot/bukarehatbot/entity"
 )
 
-// GetOneUser _
-func GetOneUser(username string) entity.User {
+// FindUserByUsername _
+func FindUserByUsername(username string) entity.User {
 	user := entity.User{}
-	err := app.MysqlClient.QueryRow("SELECT * FROM users WHERE username = ?", username).Scan(&user.ID, &user.Username, &user.IsAdmin)
+	err := app.
+		MysqlClient.
+		QueryRow("SELECT * FROM users WHERE username = ?", username).
+		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
+
 	if err != nil {
 		log.Println(err)
 	}
@@ -20,7 +24,7 @@ func GetOneUser(username string) entity.User {
 
 // IsUserEligible _
 func IsUserEligible(username string) bool {
-	user := GetOneUser(username)
+	user := FindUserByUsername(username)
 	if user == (entity.User{}) {
 		return false
 	}
@@ -30,12 +34,27 @@ func IsUserEligible(username string) bool {
 
 // IsAdmin _
 func IsAdmin(username string) bool {
-	user := GetOneUser(username)
+	user := FindUserByUsername(username)
 	if user == (entity.User{}) {
 		return false
 	}
 
 	return user.IsAdmin
+}
+
+// FindAdminByGroupID _
+func FindAdminByGroupID(groupID int64) entity.User {
+	user := entity.User{}
+	err := app.
+		MysqlClient.
+		QueryRow("SELECT * FROM users WHERE group_id = ? AND is_admin = ?", groupID, true).
+		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return user
 }
 
 // InsertOneUser _

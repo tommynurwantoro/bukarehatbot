@@ -20,6 +20,31 @@ func InvalidCommand() string {
 	return "Aku gak ngerti perintah itu, coba perintah yang lain ya."
 }
 
+// InvalidCommandForUser _
+func InvalidCommandForUser(username string) string {
+	return "Kamu gak boleh pakai perintah ini, ngomong dulu ke @" + username + " ya"
+}
+
+// AdminNotFound _
+func AdminNotFound() string {
+	return "Hanya admin yang boleh pakai perintah ini"
+}
+
+// ChangeGroupName _
+func ChangeGroupName(args string) string {
+	return "Nama group udah diganti menjadi `" + args + "` ya"
+}
+
+// ShowGroupName _
+func ShowGroupName(name string) string {
+	return "Nama group kalian " + name
+}
+
+// UnknownGroupName _
+func UnknownGroupName() string {
+	return "Admin belum ngubah nama group ya"
+}
+
 // Private //
 
 func commands() string {
