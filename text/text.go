@@ -1,5 +1,7 @@
 package text
 
+import "strings"
+
 // Start _
 func Start() string {
 	return "Halo! Bot ini dibuat oleh Tommy (@tommynurwantoro).\nCoba gunakan /help untuk melihat perintah-perintah yang tersedia."
@@ -43,6 +45,16 @@ func ShowGroupName(name string) string {
 // UnknownGroupName _
 func UnknownGroupName() string {
 	return "Admin belum ngubah nama group ya"
+}
+
+// SuccessAddMember _
+func SuccessAddMember(usernames []string) string {
+	return "Berhasil menambahkan " + strings.Join(usernames[:], ", ")
+}
+
+// InvalidParameter _
+func InvalidParameter() string {
+	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
 // Private //
