@@ -21,20 +21,20 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 		case "halo":
 			return text.Halo(update.Message.From.UserName)
 		case "add_member":
-			if args != "" {
-				if mysql.IsAdmin(update.Message.From.UserName) {
-					usernames := helper.GetUsernames(args)
-					for _, username := range usernames {
-						mysql.FirstOrCreateUser(update.Message.Chat.ID, username)
-					}
+			if args == "" {
+				return text.InvalidParameter()
+			}
 
-					return text.SuccessAddMember(usernames)
-				}
-
+			if !mysql.IsAdmin(update.Message.From.UserName) {
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
-			return text.InvalidParameter()
+			usernames := helper.GetUsernames(args)
+			for _, username := range usernames {
+				mysql.FirstOrCreateUser(update.Message.Chat.ID, username)
+			}
+
+			return text.SuccessAddMember(usernames)
 		case "show_group_name":
 			group := mysql.FindByGroupID(update.Message.Chat.ID)
 			if group == (entity.Group{}) {
@@ -43,16 +43,16 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 
 			return text.ShowGroupName(group.Name)
 		case "change_group_name":
-			if args != "" {
-				if mysql.IsAdmin(update.Message.From.UserName) {
-					mysql.UpdateGroupName(update.Message.Chat.ID, args)
-					return text.ChangeGroupName(args)
-				}
-
-				return helper.InvalidCommandForUser(update.Message.Chat.ID)
+			if args == "" {
+				return text.InvalidParameter()
 			}
 
-			return text.InvalidParameter()
+			if mysql.IsAdmin(update.Message.From.UserName) {
+				mysql.UpdateGroupName(update.Message.Chat.ID, args)
+				return text.ChangeGroupName(args)
+			}
+
+			return helper.InvalidCommandForUser(update.Message.Chat.ID)
 		default:
 			return text.InvalidCommand()
 		}
