@@ -34,17 +34,17 @@ func AdminNotFound() string {
 
 // ChangeGroupName _
 func ChangeGroupName(args string) string {
-	return "Nama group udah diganti menjadi " + args
+	return "Nama group udah diganti menjadi `" + args + "` ya"
 }
 
 // ShowGroupName _
 func ShowGroupName(name string) string {
-	return "Nama group adalah " + name
+	return "Nama group kalian " + name
 }
 
 // UnknownGroupName _
 func UnknownGroupName() string {
-	return "Admin belum set nama group"
+	return "Admin belum ngubah nama group ya"
 }
 
 // SuccessAddMember _
