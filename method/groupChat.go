@@ -2,9 +2,9 @@ package method
 
 import (
 	"github.com/bot/bukarehatbot/entity"
-	"github.com/bot/bukarehatbot/helper"
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
+	"github.com/bot/bukarehatbot/utility/helper"
 	"github.com/bot/bukarehatbot/utility/mysql"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
