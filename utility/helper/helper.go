@@ -8,7 +8,7 @@ import (
 
 // InvalidCommandForUser _
 func InvalidCommandForUser(groupID int64) string {
-	admin := mysql.GetAdmin(groupID)
+	admin := mysql.FindAdminByGroupID(groupID)
 	if admin == (entity.User{}) {
 		return text.AdminNotFound()
 	}

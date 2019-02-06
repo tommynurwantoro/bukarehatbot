@@ -7,8 +7,8 @@ import (
 	"github.com/bot/bukarehatbot/entity"
 )
 
-// GetOneUser _
-func GetOneUser(username string) entity.User {
+// FindUserByUsername _
+func FindUserByUsername(username string) entity.User {
 	user := entity.User{}
 	err := app.
 		MysqlClient.
@@ -24,7 +24,7 @@ func GetOneUser(username string) entity.User {
 
 // IsUserEligible _
 func IsUserEligible(username string) bool {
-	user := GetOneUser(username)
+	user := FindUserByUsername(username)
 	if user == (entity.User{}) {
 		return false
 	}
@@ -34,7 +34,7 @@ func IsUserEligible(username string) bool {
 
 // IsAdmin _
 func IsAdmin(username string) bool {
-	user := GetOneUser(username)
+	user := FindUserByUsername(username)
 	if user == (entity.User{}) {
 		return false
 	}
@@ -42,8 +42,8 @@ func IsAdmin(username string) bool {
 	return user.IsAdmin
 }
 
-// GetAdmin _
-func GetAdmin(groupID int64) entity.User {
+// FindAdminByGroupID _
+func FindAdminByGroupID(groupID int64) entity.User {
 	user := entity.User{}
 	err := app.
 		MysqlClient.
