@@ -57,6 +57,21 @@ func InvalidParameter() string {
 	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
+// AdminChanged _
+func AdminChanged(username string) string {
+	return "Admin sudah diubah ke @" + username + " ya"
+}
+
+// UnableToChangeAdmin _
+func UnableToChangeAdmin(username string) string {
+	return "Kamu gak bisa ubah admin, yang bisa ubah adminnya cuma admin yang sekarang. Coba tanya @" + username
+}
+
+// UserNotInGroup _
+func UserNotInGroup(username string) string {
+	return "@" + username + " gak ada di group kamu, coba cek lagi ya."
+}
+
 // Private //
 
 func commands() string {

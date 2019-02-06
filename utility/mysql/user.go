@@ -76,3 +76,33 @@ func FirstOrCreateUser(groupID int64, username string) {
 		InsertOneUser(groupID, username)
 	}
 }
+
+// UpdateUserAsAdmin _
+func UpdateUserAsAdmin(groupID int64, username string, isAdmin bool) {
+	now := time.Now()
+
+	_, err := app.MysqlClient.Exec(
+		"UPDATE users SET is_admin = ?, updated_at = ? WHERE username = ? AND group_id = ?",
+		isAdmin, now, username, groupID)
+	if err != nil {
+		panic(err)
+	}
+}
+
+// IsUserInGroup _
+func IsUserInGroup(groupID int64, username string) bool {
+	user := entity.User{}
+	err := app.MysqlClient.
+		QueryRow("SELECT * FROM users WHERE username = ? AND group_id = ?", username, groupID).
+		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	if user == (entity.User{}) {
+		return false
+	}
+
+	return true
+}

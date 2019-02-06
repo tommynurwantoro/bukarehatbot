@@ -1,6 +1,8 @@
 package method
 
 import (
+	"strings"
+
 	"github.com/bot/bukarehatbot/entity"
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
@@ -11,8 +13,9 @@ import (
 
 // GroupChat _
 func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) string {
+	args := update.Message.CommandArguments()
+
 	if groupState == utility.RedisState["init"] {
-		args := update.Message.CommandArguments()
 		switch update.Message.Command() {
 		case "start":
 			return text.Start()
@@ -53,10 +56,35 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			}
 
 			return text.InvalidParameter()
+		case "init_admin":
+			if args != "" {
+				username := strings.Split(args, " ")[0]
+				return initAdmin(update.Message.Chat.ID, username)
+			}
+
+			return text.InvalidParameter()
 		default:
 			return text.InvalidCommand()
 		}
 	}
 
 	return text.InvalidCommand()
+}
+
+func initAdmin(groupID int64, username string) string {
+	// If user in the group
+	if mysql.IsUserInGroup(groupID, username) {
+		admin := mysql.FindAdminByGroupID(groupID)
+
+		// If there is no admin
+		if admin == (entity.User{}) {
+			mysql.UpdateUserAsAdmin(groupID, username, true)
+			return text.AdminChanged(username)
+		}
+
+		// Only admin can change admin privilege
+		return text.UnableToChangeAdmin(admin.Username)
+	}
+
+	return text.UserNotInGroup(username)
 }
