@@ -71,7 +71,7 @@ func InsertOneUser(groupID int64, username string) {
 
 // FirstOrCreateUser _
 func FirstOrCreateUser(groupID int64, username string) {
-	user := GetOneUser(username)
+	user := FindUserByUsername(username)
 	if user == (entity.User{}) {
 		InsertOneUser(groupID, username)
 	}
