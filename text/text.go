@@ -72,6 +72,11 @@ func UserNotInGroup(username string) string {
 	return "@" + username + " gak ada di group kamu, coba cek lagi ya."
 }
 
+// OnlyForSuperAdmin _
+func OnlyForSuperAdmin() string {
+	return "Kamu hanya dapat memilih super admin ya sebagai admin BukaRehat"
+}
+
 // Private //
 
 func commands() string {
