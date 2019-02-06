@@ -75,6 +75,14 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			mysql.InsertOneMicrobreak(update.Message.Chat.ID, url, restHour, restMinute)
 
 			return text.SuccessInsertMicrobreak(args)
+		case "show_micros":
+			microbreaks := mysql.GetMicrobreaksByGroupID(update.Message.Chat.ID)
+
+			if len(microbreaks) == 0 {
+				return text.NotFoundMicrobreak()
+			}
+
+			return helper.PrintMicrobreaks(microbreaks)
 		default:
 			return text.InvalidCommand()
 		}

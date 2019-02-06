@@ -67,6 +67,11 @@ func ReachMaxMicrobreak() string {
 	return "Microbreak kalian udah mencapai batas maksimal nih. Kamu udah gak bisa nambah lagi"
 }
 
+// NotFoundMicrobreak _
+func NotFoundMicrobreak() string {
+	return "Group kalian belum ada microbreak, buat pake command /micro {HH:mm} ya"
+}
+
 // Private //
 
 func commands() string {

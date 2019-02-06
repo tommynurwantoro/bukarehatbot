@@ -1,9 +1,11 @@
 package mysql
 
 import (
+	"log"
 	"time"
 
 	"github.com/bot/bukarehatbot/app"
+	"github.com/bot/bukarehatbot/entity"
 )
 
 // InsertOneMicrobreak _
@@ -28,4 +30,23 @@ func GetMicrobreakCount(groupID int64) int {
 	}
 
 	return count
+}
+
+// GetMicrobreaksByGroupID _
+func GetMicrobreaksByGroupID(groupID int64) []entity.Microbreak {
+	rows, err := app.MysqlClient.Query("SELECT * FROM microbreaks WHERE group_id = ?", groupID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	results := make([]entity.Microbreak, 0)
+	for rows.Next() {
+		var result entity.Microbreak
+		if err := rows.Scan(&result.ID, &result.GroupID, &result.URL, &result.RestHour, &result.RestMinute, &result.CreatedAt, &result.UpdatedAt); err != nil {
+			log.Fatal(err)
+		}
+		results = append(results, result)
+	}
+
+	return results
 }
