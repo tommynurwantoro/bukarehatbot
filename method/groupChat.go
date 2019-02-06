@@ -33,6 +33,8 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
+
+			return text.InvalidParameter()
 		case "show_group_name":
 			group := mysql.FindByGroupID(update.Message.Chat.ID)
 			if group == (entity.Group{}) {
@@ -49,6 +51,8 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
+
+			return text.InvalidParameter()
 		default:
 			return text.InvalidCommand()
 		}
