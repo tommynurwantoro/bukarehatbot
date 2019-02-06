@@ -16,3 +16,16 @@ func InsertOneMicrobreak(groupID int64, url string, hour int, minute int) {
 		panic(err)
 	}
 }
+
+// GetMicrobreakCount _
+func GetMicrobreakCount(groupID int64) int {
+	var count int
+	rows, _ := app.
+		MysqlClient.
+		Query("SELECT COUNT(id) AS count FROM microbreaks where group_id = ?", groupID)
+	if rows.Next() {
+		rows.Scan(&count)
+	}
+
+	return count
+}

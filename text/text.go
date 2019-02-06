@@ -62,6 +62,11 @@ func InvalidParameter() string {
 	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
+// ReachMaxMicrobreak _
+func ReachMaxMicrobreak() string {
+	return "Microbreak kalian udah mencapai batas maksimal nih. Kamu udah gak bisa nambah lagi"
+}
+
 // Private //
 
 func commands() string {

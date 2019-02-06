@@ -1,6 +1,9 @@
 package method
 
 import (
+	"os"
+	"strconv"
+
 	"github.com/bot/bukarehatbot/entity"
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
@@ -47,21 +50,31 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				return text.InvalidParameter()
 			}
 
-			if mysql.IsAdmin(update.Message.From.UserName) {
-				mysql.UpdateGroupName(update.Message.Chat.ID, args)
-				return text.ChangeGroupName(args)
+			if !mysql.IsAdmin(update.Message.From.UserName) {
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
-			return helper.InvalidCommandForUser(update.Message.Chat.ID)
+			mysql.UpdateGroupName(update.Message.Chat.ID, args)
+			return text.ChangeGroupName(args)
 		case "micro":
-			if args != "" {
-				// if mysql.IsAdmin(update.Message.From.UserName) {
-				// TODO: add helper to generate url and parsing args to hour and minute
-				mysql.InsertOneMicrobreak(update.Message.Chat.ID, "https://bukalapak.com", 13, 30)
-				return text.SuccessInsertMicrobreak(args)
-				// }
-				// TODO: use helper invalid command
+			if args == "" {
+				return text.InvalidParameter()
 			}
+
+			if !mysql.IsAdmin(update.Message.From.UserName) {
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
+			}
+
+			maxMicrobreak, _ := strconv.Atoi(os.Getenv("MAX_MICROBREAK"))
+			if mysql.GetMicrobreakCount(update.Message.Chat.ID) >= maxMicrobreak {
+				return text.ReachMaxMicrobreak()
+			}
+
+			restHour, restMinute := helper.GetRestTime(args)
+			url := helper.GenerateMicrobreakURL(update.Message.Chat.ID, restHour, restMinute)
+			mysql.InsertOneMicrobreak(update.Message.Chat.ID, url, restHour, restMinute)
+
+			return text.SuccessInsertMicrobreak(args)
 		default:
 			return text.InvalidCommand()
 		}
