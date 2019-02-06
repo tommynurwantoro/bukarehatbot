@@ -73,6 +73,21 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 
 				return text.OnlyForSuperAdmin()
 			}
+		case "change_admin":
+			if args != "" {
+				username := helper.GetUsernames(strings.Split(args, " ")[0])[0]
+
+				if !mysql.IsUserInGroup(update.Message.Chat.ID, username) {
+					return text.UserNotInGroup(username)
+				}
+
+				if !mysql.IsAdmin(update.Message.From.UserName) {
+					return helper.InvalidCommandForUser(update.Message.Chat.ID)
+				}
+
+				mysql.ChangeAdmin(update.Message.Chat.ID, username)
+				return text.NoLongerAnAdmin() + ". " + text.AdminChanged(username)
+			}
 
 			return text.InvalidParameter()
 		default:
