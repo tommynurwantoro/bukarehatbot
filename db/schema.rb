@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_03_042230) do
+ActiveRecord::Schema.define(version: 2019_02_05_075701) do
 
   create_table "groups", id: :bigint, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2019_02_03_042230) do
 
   create_table "microbreaks", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "group_id"
-    t.string "name", null: false
-    t.timestamp "rest_time", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "url", null: false
+    t.integer "rest_hour", limit: 2
+    t.integer "rest_minute", limit: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_microbreaks_on_group_id"
