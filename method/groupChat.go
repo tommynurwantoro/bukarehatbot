@@ -66,7 +66,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			}
 
 			maxMicrobreak, _ := strconv.Atoi(os.Getenv("MAX_MICROBREAK"))
-			if mysql.GetMicrobreakCount(update.Message.Chat.ID) >= maxMicrobreak {
+			if mysql.CountMicrobreakByGroupID(update.Message.Chat.ID) >= maxMicrobreak {
 				return text.ReachMaxMicrobreak()
 			}
 

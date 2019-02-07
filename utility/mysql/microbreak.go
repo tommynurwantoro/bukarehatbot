@@ -19,8 +19,8 @@ func InsertOneMicrobreak(groupID int64, url string, hour int, minute int) {
 	}
 }
 
-// GetMicrobreakCount _
-func GetMicrobreakCount(groupID int64) int {
+// CountMicrobreakByGroupID _
+func CountMicrobreakByGroupID(groupID int64) int {
 	var count int
 	rows, _ := app.
 		MysqlClient.
