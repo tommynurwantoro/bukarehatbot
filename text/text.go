@@ -22,6 +22,11 @@ func InvalidCommand() string {
 	return "Aku gak ngerti perintah itu, coba perintah yang lain ya."
 }
 
+// SuccessInsertMicrobreak _
+func SuccessInsertMicrobreak(restTime string) string {
+	return "Berhasil menambahkan microbreak pada " + restTime
+}
+
 // InvalidCommandForUser _
 func InvalidCommandForUser(username string) string {
 	return "Kamu gak boleh pakai perintah ini, ngomong dulu ke @" + username + " ya"
@@ -75,6 +80,16 @@ func UserNotInGroup(username string) string {
 // OnlyChooseSuperAdmin _
 func OnlyChooseSuperAdmin() string {
 	return "Kamu hanya dapat memilih super admin ya sebagai admin BukaRehat"
+}
+
+// ReachMaxMicrobreak _
+func ReachMaxMicrobreak() string {
+	return "Microbreak kalian udah mencapai batas maksimal nih. Kamu udah gak bisa nambah lagi"
+}
+
+// NotFoundMicrobreak _
+func NotFoundMicrobreak() string {
+	return "Group kalian belum ada microbreak, buat pake command /micro {HH:mm} ya"
 }
 
 // Private //
