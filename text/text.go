@@ -62,6 +62,26 @@ func InvalidParameter() string {
 	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
+// AdminInitialized _
+func AdminInitialized(username string) string {
+	return "Admin sudah diubah ke @" + username + " ya"
+}
+
+// UnableToChangeAdmin _
+func UnableToChangeAdmin(username string) string {
+	return "Kamu gak bisa ubah admin, yang bisa ubah adminnya cuma admin yang sekarang. Coba tanya @" + username
+}
+
+// UserNotInGroup _
+func UserNotInGroup(username string) string {
+	return "@" + username + " gak ada di group kamu, coba cek lagi ya."
+}
+
+// OnlyChooseSuperAdmin _
+func OnlyChooseSuperAdmin() string {
+	return "Kamu hanya dapat memilih super admin ya sebagai admin BukaRehat"
+}
+
 // ReachMaxMicrobreak _
 func ReachMaxMicrobreak() string {
 	return "Microbreak kalian udah mencapai batas maksimal nih. Kamu udah gak bisa nambah lagi"
