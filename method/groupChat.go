@@ -71,7 +71,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 					}
 				}
 
-				return text.OnlyForSuperAdmin()
+				return text.OnlyChooseSuperAdmin()
 			}
 
 			return text.InvalidParameter()
@@ -89,7 +89,7 @@ func initAdmin(groupID int64, username string) string {
 	// If there is no admin
 	if admin == (entity.User{}) {
 		mysql.UpdateUserAsAdmin(groupID, username, true)
-		return text.AdminChanged(username)
+		return text.AdminInitialized(username)
 	}
 
 	// Only admin can change admin privilege

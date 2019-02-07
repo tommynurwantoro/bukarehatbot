@@ -57,8 +57,8 @@ func InvalidParameter() string {
 	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
-// AdminChanged _
-func AdminChanged(username string) string {
+// AdminInitialized _
+func AdminInitialized(username string) string {
 	return "Admin sudah diubah ke @" + username + " ya"
 }
 
@@ -72,8 +72,8 @@ func UserNotInGroup(username string) string {
 	return "@" + username + " gak ada di group kamu, coba cek lagi ya."
 }
 
-// OnlyForSuperAdmin _
-func OnlyForSuperAdmin() string {
+// OnlyChooseSuperAdmin _
+func OnlyChooseSuperAdmin() string {
 	return "Kamu hanya dapat memilih super admin ya sebagai admin BukaRehat"
 }
 
