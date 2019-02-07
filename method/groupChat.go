@@ -1,6 +1,8 @@
 package method
 
 import (
+	"os"
+	"strconv"
 	"strings"
 
 	"github.com/bot/bukarehatbot/app"
@@ -51,12 +53,39 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				return text.InvalidParameter()
 			}
 
-			if mysql.IsAdmin(update.Message.From.UserName) {
-				mysql.UpdateGroupName(update.Message.Chat.ID, args)
-				return text.ChangeGroupName(args)
+			if !mysql.IsAdmin(update.Message.From.UserName) {
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
-			return text.InvalidParameter()
+			mysql.UpdateGroupName(update.Message.Chat.ID, args)
+			return text.ChangeGroupName(args)
+		case "micro":
+			if args == "" {
+				return text.InvalidParameter()
+			}
+
+			if !mysql.IsAdmin(update.Message.From.UserName) {
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
+			}
+
+			maxMicrobreak, _ := strconv.Atoi(os.Getenv("MAX_MICROBREAK"))
+			if mysql.CountMicrobreakByGroupID(update.Message.Chat.ID) >= maxMicrobreak {
+				return text.ReachMaxMicrobreak()
+			}
+
+			restHour, restMinute := helper.GetRestTime(args)
+			url := helper.GenerateMicrobreakURL(update.Message.Chat.ID, restHour, restMinute)
+			mysql.InsertOneMicrobreak(update.Message.Chat.ID, url, restHour, restMinute)
+
+			return text.SuccessInsertMicrobreak(args)
+		case "show_micros":
+			microbreaks := mysql.GetMicrobreaksByGroupID(update.Message.Chat.ID)
+
+			if len(microbreaks) == 0 {
+				return text.NotFoundMicrobreak()
+			}
+
+			return helper.PrintMicrobreaks(microbreaks)
 		case "init_admin":
 			if args != "" {
 				username := helper.GetUsernames(strings.Split(args, " ")[0])[0]
@@ -71,7 +100,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 					}
 				}
 
-				return text.OnlyForSuperAdmin()
+				return text.OnlyChooseSuperAdmin()
 			}
 		case "change_admin":
 			if args != "" {
@@ -104,7 +133,7 @@ func initAdmin(groupID int64, username string) string {
 	// If there is no admin
 	if admin == (entity.User{}) {
 		mysql.UpdateUserAsAdmin(groupID, username, true)
-		return text.AdminChanged(username)
+		return text.AdminInitialized(username)
 	}
 
 	// Only admin can change admin privilege
