@@ -105,6 +105,5 @@ func NotFoundLeaderboard() string {
 // Private //
 
 func commands() string {
-
 	return "/halo Cuma buat nyapa aja"
 }
