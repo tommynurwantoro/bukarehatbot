@@ -1,6 +1,12 @@
 package text
 
-import "strings"
+import (
+	"bytes"
+	"fmt"
+	"strings"
+
+	"github.com/bot/bukarehatbot/entity"
+)
 
 // Start _
 func Start() string {
@@ -10,6 +16,11 @@ func Start() string {
 // Help _
 func Help() string {
 	return "Kamu bisa gunakan perintah-perintah ini loh:\n" + commands()
+}
+
+// HelpGroup _
+func HelpGroup() string {
+	return "Kamu bisa gunakan perintah-perintah ini loh:\n" + groupCommands()
 }
 
 // Halo _
@@ -106,4 +117,14 @@ func NotFoundLeaderboard() string {
 
 func commands() string {
 	return "/halo Cuma buat nyapa aja"
+}
+
+func groupCommands() string {
+	var b bytes.Buffer
+
+	for _, c := range entity.GroupCommands() {
+		b.WriteString(fmt.Sprintf("%s %s", c.Name, c.Description))
+	}
+
+	return b.String()
 }
