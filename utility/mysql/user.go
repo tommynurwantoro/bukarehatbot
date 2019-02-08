@@ -106,3 +106,26 @@ func IsUserInGroup(groupID int64, username string) bool {
 
 	return true
 }
+
+// ChangeAdmin _
+func ChangeAdmin(groupID int64, username string) {
+	now := time.Now()
+	admin := FindAdminByGroupID(groupID)
+	trx, _ := app.MysqlClient.Begin()
+	stmt, err := trx.Prepare("UPDATE users SET is_admin = ?, updated_at = ? WHERE username = ? AND group_id = ?")
+
+	if _, err = stmt.Exec(false, now, admin.Username, groupID); err != nil {
+		trx.Rollback()
+		panic(err)
+	}
+
+	if _, err = stmt.Exec(true, now, username, groupID); err != nil {
+		trx.Rollback()
+		panic(err)
+	}
+
+	if err = trx.Commit(); err != nil {
+		trx.Rollback()
+		panic(err)
+	}
+}
