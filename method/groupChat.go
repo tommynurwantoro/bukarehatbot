@@ -115,7 +115,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				}
 
 				mysql.ChangeAdmin(update.Message.Chat.ID, username)
-				return text.NoLongerAnAdmin() + ". " + text.AdminChanged(username)
+				return text.NoLongerAnAdmin() + ". " + text.AdminInitialized(username)
 			}
 
 			return text.InvalidParameter()
