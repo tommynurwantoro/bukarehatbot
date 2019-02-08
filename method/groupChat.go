@@ -119,6 +119,14 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			}
 
 			return text.InvalidParameter()
+		case "leaderboard":
+			users := mysql.GetLeaderBoardByGroupID(update.Message.Chat.ID)
+
+			if len(users) == 0 {
+				return text.NotFoundLeaderboard()
+			}
+
+			return helper.GenerateLeaderboard(update.Message.Chat.ID, users)
 		default:
 			return text.InvalidCommand()
 		}

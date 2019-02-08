@@ -129,3 +129,22 @@ func ChangeAdmin(groupID int64, username string) {
 		panic(err)
 	}
 }
+
+// GetLeaderBoardByGroupID _
+func GetLeaderBoardByGroupID(groupID int64) []entity.User {
+	rows, err := app.MysqlClient.Query("SELECT username, point FROM users WHERE group_id = ? ORDER BY point DESC", groupID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	results := make([]entity.User, 0)
+	for rows.Next() {
+		var result entity.User
+		if err := rows.Scan(&result.Username, &result.Point); err != nil {
+			log.Fatal(err)
+		}
+		results = append(results, result)
+	}
+
+	return results
+}
