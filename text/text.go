@@ -97,8 +97,14 @@ func NotFoundMicrobreak() string {
 	return "Group kalian belum ada microbreak, buat pake command /micro {HH:mm} ya"
 }
 
+// NotFoundLeaderboard _
+func NotFoundLeaderboard() string {
+	return "Leaderboardnya belum ada nih, coba bikin event microbreak dulu ya"
+}
+
 // Private //
 
 func commands() string {
+
 	return "/halo Cuma buat nyapa aja"
 }

@@ -45,7 +45,7 @@ func PrintMicrobreaks(microbreaks []entity.Microbreak) string {
 	var results []string
 	results = append(results, "List microbreak : \n")
 	for _, microbreak := range microbreaks {
-		results = append(results, GetMicrobreak(microbreak))
+		results = append(results, getMicrobreak(microbreak))
 	}
 
 	return strings.Join(results, "")
@@ -61,9 +61,20 @@ func InvalidCommandForUser(groupID int64) string {
 	return text.InvalidCommandForUser(admin.Username)
 }
 
+// GenerateLeaderboard _
+func GenerateLeaderboard(groupID int64, users []entity.User) string {
+	group := mysql.FindByGroupID(groupID)
+	var results []string
+	results = append(results, "Leaderboard ", group.Name, ":\n")
+	for _, user := range users {
+		results = append(results, fmt.Sprintf("%s : %d\n", user.Username, user.Point))
+	}
+
+	return strings.Join(results, "")
+}
+
 // Private //
 
-// GetMicrobreak _
-func GetMicrobreak(micro entity.Microbreak) string {
+func getMicrobreak(micro entity.Microbreak) string {
 	return fmt.Sprintf("%d:%d\n", micro.RestHour, micro.RestMinute)
 }
