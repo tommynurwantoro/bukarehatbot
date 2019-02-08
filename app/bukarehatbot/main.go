@@ -29,8 +29,8 @@ func main() {
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
 		if update.Message.NewChatMembers != nil {
-			for _, NewMember := range *update.Message.NewChatMembers {
-				if NewMember.UserName == app.Bot.Self.UserName && mysql.FindByGroupID(update.Message.Chat.ID) == (entity.Group{}) {
+			for _, NewChatMember := range *update.Message.NewChatMembers {
+				if NewChatMember.UserName == app.Bot.Self.UserName && mysql.FindByGroupID(update.Message.Chat.ID) == (entity.Group{}) {
 					mysql.InsertOneGroup(update.Message.Chat.ID, update.Message.Chat.Title)
 					mysql.FirstOrCreateUser(update.Message.Chat.ID, update.Message.From.UserName)
 				}
