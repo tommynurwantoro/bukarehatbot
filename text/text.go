@@ -62,6 +62,11 @@ func InvalidParameter() string {
 	return "Parameternya belum bener tuh, coba dicek lagi ya"
 }
 
+// NoLongerAnAdmin _
+func NoLongerAnAdmin() string {
+	return "Kamu sudah bukan admin BukaRehat lagi"
+}
+
 // AdminInitialized _
 func AdminInitialized(username string) string {
 	return "Admin sudah diubah ke @" + username + " ya"
