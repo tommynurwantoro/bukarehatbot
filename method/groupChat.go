@@ -23,7 +23,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 		case "start":
 			return text.Start()
 		case "help":
-			return text.Help()
+			return text.HelpGroup()
 		case "halo":
 			return text.Halo(update.Message.From.UserName)
 		case "add_member":
