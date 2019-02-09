@@ -33,6 +33,7 @@ func main() {
 				if NewChatMember.UserName == app.Bot.Self.UserName && mysql.FindByGroupID(update.Message.Chat.ID) == (entity.Group{}) {
 					mysql.InsertOneGroup(update.Message.Chat.ID, update.Message.Chat.Title)
 					mysql.FirstOrCreateUser(update.Message.Chat.ID, update.Message.From.UserName)
+					mysql.UpdateUserAsAdmin(update.Message.Chat.ID, update.Message.From.UserName, true)
 				}
 			}
 		}
