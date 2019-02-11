@@ -10,7 +10,9 @@ import (
 
 // Start _
 func Start() string {
-	return "Halo! Bot ini dibuat oleh Tommy (@tommynurwantoro).\nCoba gunakan /help untuk melihat perintah-perintah yang tersedia."
+	return "Halo! Bot ini dibuat oleh tim BukaRehat.\n" +
+		"Jika ada pertanyaan silakan hubungi owner yang ada di https://github.com/tommynurwantoro/bukarehatbot\n" +
+		"Coba gunakan /help untuk melihat perintah-perintah yang tersedia."
 }
 
 // Help _
@@ -91,11 +93,6 @@ func UnableToChangeAdmin(username string) string {
 // UserNotInGroup _
 func UserNotInGroup(username string) string {
 	return "@" + username + " gak ada di group kamu, coba cek lagi ya."
-}
-
-// OnlyChooseSuperAdmin _
-func OnlyChooseSuperAdmin() string {
-	return "Kamu hanya dapat memilih super admin ya sebagai admin BukaRehat"
 }
 
 // ReachMaxMicrobreak _

@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/bot/bukarehatbot/app"
 	"github.com/bot/bukarehatbot/entity"
 	"github.com/bot/bukarehatbot/text"
 	"github.com/bot/bukarehatbot/utility"
@@ -86,22 +85,6 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			}
 
 			return helper.PrintMicrobreaks(microbreaks)
-		case "init_admin":
-			if args != "" {
-				username := helper.GetUsernames(strings.Split(args, " ")[0])[0]
-				admins, err := app.Bot.GetChatAdministrators(update.Message.Chat.ChatConfig())
-				if err != nil {
-					panic(err)
-				}
-
-				for _, admin := range admins {
-					if admin.User.UserName == username {
-						return initAdmin(update.Message.Chat.ID, username)
-					}
-				}
-
-				return text.OnlyChooseSuperAdmin()
-			}
 		case "change_admin":
 			if args != "" {
 				username := helper.GetUsernames(strings.Split(args, " ")[0])[0]
@@ -133,17 +116,4 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 	}
 
 	return text.InvalidCommand()
-}
-
-func initAdmin(groupID int64, username string) string {
-	admin := mysql.FindAdminByGroupID(groupID)
-
-	// If there is no admin
-	if admin == (entity.User{}) {
-		mysql.UpdateUserAsAdmin(groupID, username, true)
-		return text.AdminInitialized(username)
-	}
-
-	// Only admin can change admin privilege
-	return text.UnableToChangeAdmin(admin.Username)
 }
