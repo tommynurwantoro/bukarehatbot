@@ -1,12 +1,12 @@
 # BukaRehat Bot
 
-Telegram bot for BukaRehat apps (my team)
+Telegram bot for BukaRehat apps
 
 ## Owner
 
-@tommynurwantoro
-@satriowisnugroho
-@himangSharatun
+[Tommy Nurwantoro](https://github.com/tommynurwantoro)
+[Satrio Wisnugroho](https://github.com/satriowisnugroho)
+[Himang Sharatun](https://github.com/himangSharatun)
 
 ## Onboarding and Development Guide
 
@@ -49,7 +49,7 @@ Telegram bot for BukaRehat apps (my team)
   make dep
   ```
 
-- Copy env.sample and if necessary, modify the env value(s)
+- Copy env.sample and db/config.yml.sample if necessary, modify the env and config value(s)
 
   ```sh
   cp env.sample .env
