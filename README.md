@@ -53,6 +53,7 @@ Telegram bot for BukaRehat apps
 
   ```sh
   cp env.sample .env
+  cp db/config.yml.sample /db/config.yml
   ```
 
 - Install Bundler
