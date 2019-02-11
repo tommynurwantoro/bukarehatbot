@@ -5,8 +5,10 @@ import (
 	"strconv"
 
 	"github.com/bot/bukarehatbot/app"
+	"github.com/bot/bukarehatbot/entity"
 	"github.com/bot/bukarehatbot/method"
 	"github.com/bot/bukarehatbot/utility"
+	"github.com/bot/bukarehatbot/utility/mysql"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
@@ -25,6 +27,16 @@ func main() {
 		}
 
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		if update.Message.NewChatMembers != nil {
+			for _, NewChatMember := range *update.Message.NewChatMembers {
+				if NewChatMember.UserName == app.Bot.Self.UserName && mysql.FindByGroupID(update.Message.Chat.ID) == (entity.Group{}) {
+					mysql.InsertOneGroup(update.Message.Chat.ID, update.Message.Chat.Title)
+					mysql.FirstOrCreateUser(update.Message.Chat.ID, update.Message.From.UserName)
+					mysql.UpdateUserAsAdmin(update.Message.Chat.ID, update.Message.From.UserName, true)
+				}
+			}
+		}
 
 		if update.Message.IsCommand() {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
