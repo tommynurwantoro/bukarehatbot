@@ -31,7 +31,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				return text.InvalidParameter()
 			}
 
-			if !mysql.IsAdmin(update.Message.From.UserName) {
+			if !mysql.IsAdmin(update.Message.From.UserName, update.Message.Chat.ID) {
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
@@ -53,7 +53,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				return text.InvalidParameter()
 			}
 
-			if !mysql.IsAdmin(update.Message.From.UserName) {
+			if !mysql.IsAdmin(update.Message.From.UserName, update.Message.Chat.ID) {
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
@@ -64,7 +64,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 				return text.InvalidParameter()
 			}
 
-			if !mysql.IsAdmin(update.Message.From.UserName) {
+			if !mysql.IsAdmin(update.Message.From.UserName, update.Message.Chat.ID) {
 				return helper.InvalidCommandForUser(update.Message.Chat.ID)
 			}
 
@@ -110,7 +110,7 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 					return text.UserNotInGroup(username)
 				}
 
-				if !mysql.IsAdmin(update.Message.From.UserName) {
+				if !mysql.IsAdmin(update.Message.From.UserName, update.Message.Chat.ID) {
 					return helper.InvalidCommandForUser(update.Message.Chat.ID)
 				}
 

@@ -8,12 +8,12 @@ import (
 	"github.com/bot/bukarehatbot/entity"
 )
 
-// FindUserByUsername _
-func FindUserByUsername(username string) entity.User {
+// FindUserByUsernameAndGroupID _
+func FindUserByUsernameAndGroupID(username string, groupID int64) entity.User {
 	user := entity.User{}
 	err := app.
 		MysqlClient.
-		QueryRow("SELECT * FROM users WHERE username = ?", username).
+		QueryRow("SELECT * FROM users WHERE username = ? AND group_id = ?", username, groupID).
 		Scan(&user.ID, &user.Username, &user.GroupID, &user.IsAdmin, &user.Point, &user.CreatedAt, &user.UpdatedAt)
 
 	if err != nil {
@@ -24,8 +24,8 @@ func FindUserByUsername(username string) entity.User {
 }
 
 // IsUserEligible _
-func IsUserEligible(username string) bool {
-	user := FindUserByUsername(username)
+func IsUserEligible(username string, groupID int64) bool {
+	user := FindUserByUsernameAndGroupID(username, groupID)
 	if user == (entity.User{}) {
 		return false
 	}
@@ -34,8 +34,8 @@ func IsUserEligible(username string) bool {
 }
 
 // IsAdmin _
-func IsAdmin(username string) bool {
-	user := FindUserByUsername(username)
+func IsAdmin(username string, groupID int64) bool {
+	user := FindUserByUsernameAndGroupID(username, groupID)
 	if user == (entity.User{}) {
 		return false
 	}
@@ -71,7 +71,7 @@ func InsertOneUser(groupID int64, username string) {
 
 // FirstOrCreateUser _
 func FirstOrCreateUser(groupID int64, username string) {
-	user := FindUserByUsername(username)
+	user := FindUserByUsernameAndGroupID(username, groupID)
 	if user == (entity.User{}) {
 		InsertOneUser(groupID, username)
 	}
