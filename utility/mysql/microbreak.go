@@ -50,3 +50,16 @@ func GetMicrobreaksByGroupID(groupID int64) []entity.Microbreak {
 
 	return results
 }
+
+// FindMicroBreak _
+func FindMicroBreak(groupID int64, hour int, minute int) entity.Microbreak {
+	microbreak := entity.Microbreak{}
+	err := app.MysqlClient.
+		QueryRow("SELECT id, group_id, url, rest_hour, rest_minute FROM microbreaks WHERE group_id = ? AND rest_hour = ? AND rest_minute = ?", groupID, hour, minute).
+		Scan(&microbreak.ID, &microbreak.GroupID, &microbreak.URL, &microbreak.RestHour, &microbreak.RestMinute)
+	if err != nil {
+		log.Println(err)
+	}
+
+	return microbreak
+}
