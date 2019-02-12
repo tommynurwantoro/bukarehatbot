@@ -80,3 +80,20 @@ Telegram bot for BukaRehat apps
   ```sh
   make run
   ```
+  
+### Deployment
+  
+- Copy bukarehat.service to /lib/systemd/system/
+  ```sh
+  cp bukarehat.service /lib/systemd/system/bukarehat.service
+  ```
+
+- Run bukarehat
+  ```sh
+  service bukarehat start
+  ```
+  
+- Stop bukarehat (If needed)
+  ```sh
+  service bukarehat stop
+  ```
