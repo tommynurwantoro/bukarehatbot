@@ -47,3 +47,22 @@ func UpdateOneGroup(groupID int64, name string) {
 		panic(err)
 	}
 }
+
+// GetAllGroups _
+func GetAllGroups() []entity.Group {
+	rows, err := app.MysqlClient.Query("SELECT DISTINCT * FROM groups")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	results := make([]entity.Group, 0)
+	for rows.Next() {
+		var result entity.Group
+		if err := rows.Scan(&result.ID, &result.Name); err != nil {
+			log.Fatal(err)
+		}
+		results = append(results, result)
+	}
+
+	return results
+}

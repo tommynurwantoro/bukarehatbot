@@ -10,9 +10,16 @@ import (
 	"github.com/bot/bukarehatbot/utility"
 	"github.com/bot/bukarehatbot/utility/mysql"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/robfig/cron"
 )
 
 func main() {
+	c := cron.New()
+	c.AddFunc("0 * * * * *", func() {
+		method.RunMicrobreak()
+	})
+	c.Start()
+
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 

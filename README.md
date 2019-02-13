@@ -4,9 +4,9 @@ Telegram bot for BukaRehat apps
 
 ## Owner
 
-[Tommy Nurwantoro](https://github.com/tommynurwantoro)
-[Satrio Wisnugroho](https://github.com/satriowisnugroho)
-[Himang Sharatun](https://github.com/himangSharatun)
+[Tommy Nurwantoro](https://github.com/tommynurwantoro)  
+[Satrio Wisnugroho](https://github.com/satriowisnugroho)  
+[Himang Sharatun](https://github.com/himangSharatun)  
 
 ## Onboarding and Development Guide
 
@@ -53,6 +53,7 @@ Telegram bot for BukaRehat apps
 
   ```sh
   cp env.sample .env
+  cp db/config.yml.sample db/config.yml
   ```
 
 - Install Bundler
@@ -78,4 +79,21 @@ Telegram bot for BukaRehat apps
 
   ```sh
   make run
+  ```
+  
+### Deployment
+  
+- Copy bukarehat.service to /lib/systemd/system/
+  ```sh
+  cp bukarehat.service /lib/systemd/system/bukarehat.service
+  ```
+
+- Run bukarehat
+  ```sh
+  service bukarehat start
+  ```
+  
+- Stop bukarehat (If needed)
+  ```sh
+  service bukarehat stop
   ```
