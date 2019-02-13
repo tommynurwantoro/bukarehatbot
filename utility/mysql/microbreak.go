@@ -63,3 +63,11 @@ func FindMicroBreak(groupID int64, hour int, minute int) entity.Microbreak {
 
 	return microbreak
 }
+
+// DeleteMicroBreak _
+func DeleteMicroBreak(groupID int64, hour int, minute int) {
+	_, err := app.MysqlClient.Exec("DELETE FROM microbreaks WHERE group_id = ? AND rest_hour = ? AND rest_minute = ?", groupID, hour, minute)
+	if err != nil {
+		panic(err)
+	}
+}

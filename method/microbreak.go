@@ -16,7 +16,7 @@ func RunMicrobreak() {
 
 	if len(allGroups) != 0 {
 		for _, group := range allGroups {
-			log.Printf("Look for microbreak at %d:%d", nowTime.Hour(), nowTime.Minute())
+			log.Printf("Look for microbreak at %02d:%02d", nowTime.Hour(), nowTime.Minute())
 			microbreak := mysql.FindMicroBreak(group.ID, nowTime.Hour(), nowTime.Minute())
 
 			if microbreak.ID != 0 {

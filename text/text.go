@@ -40,6 +40,11 @@ func SuccessInsertMicrobreak(restTime string) string {
 	return "Berhasil menambahkan microbreak pada " + restTime
 }
 
+// SuccessDeleteMicrobreak _
+func SuccessDeleteMicrobreak(restTime string) string {
+	return "Berhasil menghapus microbreak pada " + restTime
+}
+
 // InvalidCommandForUser _
 func InvalidCommandForUser(username string) string {
 	return "Kamu gak boleh pakai perintah ini, ngomong dulu ke @" + username + " ya"

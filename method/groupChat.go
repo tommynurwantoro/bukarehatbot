@@ -77,6 +77,19 @@ func GroupChat(update tgbotapi.Update, groupSessionKey string, groupState int) s
 			mysql.InsertOneMicrobreak(update.Message.Chat.ID, url, restHour, restMinute)
 
 			return text.SuccessInsertMicrobreak(args)
+		case "delete_micro":
+			if args == "" {
+				return text.InvalidParameter()
+			}
+
+			if !mysql.IsAdmin(update.Message.From.UserName, update.Message.Chat.ID) {
+				return helper.InvalidCommandForUser(update.Message.Chat.ID)
+			}
+
+			restHour, restMinute := helper.GetRestTime(args)
+			mysql.DeleteMicroBreak(update.Message.Chat.ID, restHour, restMinute)
+
+			return text.SuccessDeleteMicrobreak(args)
 		case "show_micros":
 			microbreaks := mysql.GetMicrobreaksByGroupID(update.Message.Chat.ID)
 

@@ -76,5 +76,5 @@ func GenerateLeaderboard(groupID int64, users []entity.User) string {
 // Private //
 
 func getMicrobreak(micro entity.Microbreak) string {
-	return fmt.Sprintf("%d:%d\n", micro.RestHour, micro.RestMinute)
+	return fmt.Sprintf("%02d:%02d\n", micro.RestHour, micro.RestMinute)
 }
