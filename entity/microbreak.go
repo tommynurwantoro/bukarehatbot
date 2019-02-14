@@ -12,3 +12,9 @@ type Microbreak struct {
 	CreatedAt  time.Time `db:"created_at"`
 	UpdatedAt  time.Time `db:"updated_at"`
 }
+
+// MicrobreakRequest _
+type MicrobreakRequest struct {
+	Username string `json:"username"`
+	GroupID  int64  `json:"group_id"`
+}

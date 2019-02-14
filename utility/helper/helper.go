@@ -67,7 +67,7 @@ func GenerateLeaderboard(groupID int64, users []entity.User) string {
 	var results []string
 	results = append(results, "Leaderboard ", group.Name, ":\n")
 	for _, user := range users {
-		results = append(results, fmt.Sprintf("%s : %d\n", user.Username, user.Point))
+		results = append(results, fmt.Sprintf("@%s : %d\n", user.Username, user.Point))
 	}
 
 	return strings.Join(results, "")

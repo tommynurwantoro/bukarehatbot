@@ -2,24 +2,41 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/bot/bukarehatbot/app"
 	"github.com/bot/bukarehatbot/entity"
+	"github.com/bot/bukarehatbot/http/handler"
 	"github.com/bot/bukarehatbot/method"
 	"github.com/bot/bukarehatbot/utility"
 	"github.com/bot/bukarehatbot/utility/mysql"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/gorilla/mux"
 	"github.com/robfig/cron"
 )
 
 func main() {
+	// Run Microbreak Job
 	c := cron.New()
 	c.AddFunc("0 * * * * *", func() {
 		method.RunMicrobreak()
 	})
 	c.Start()
 
+	go telegramBot()
+
+	// Endpoints
+	router := mux.NewRouter()
+	router.HandleFunc("/do-microbreak", handler.CreateMicrobreakHistoryHandler).Methods("POST")
+	http.Handle("/", router)
+	log.Println("Endpoint start...")
+	log.Fatal(http.ListenAndServe(":8989", router))
+
+	defer app.MysqlClient.Close()
+}
+
+func telegramBot() {
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
@@ -88,6 +105,4 @@ func main() {
 			app.Bot.Send(msg)
 		}
 	}
-
-	defer app.MysqlClient.Close()
 }
