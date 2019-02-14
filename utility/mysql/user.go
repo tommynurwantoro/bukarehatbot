@@ -148,3 +148,15 @@ func GetLeaderBoardByGroupID(groupID int64) []entity.User {
 
 	return results
 }
+
+// UpdateUserPointByGroupID _
+func UpdateUserPointByGroupID(groupID int64, userID uint64, point int) {
+	now := time.Now()
+
+	_, err := app.MysqlClient.Exec(
+		"UPDATE users SET point = ?, updated_at = ? WHERE id = ? AND group_id = ?",
+		point, now, userID, groupID)
+	if err != nil {
+		panic(err)
+	}
+}
